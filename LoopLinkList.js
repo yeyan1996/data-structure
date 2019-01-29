@@ -6,10 +6,11 @@ class Node {
     }
 }
 
-class LinkList {
+class LoopLinkList {
     constructor() {
         //链表头元素
         this.head = new Node('head')
+        this.head.next = this.head
     }
 
     find(item) {
@@ -29,7 +30,7 @@ class LinkList {
     //展示
     display() {
         let currentNode = this.head
-        while(currentNode.next){
+        while(currentNode.next && currentNode.next.element !== 'head'){
             console.log(currentNode.next.element)
             currentNode = currentNode.next
         }
@@ -49,13 +50,12 @@ class LinkList {
     }
 }
 
-let linkList = new LinkList()
+let loopLinkList = new LoopLinkList()
 
-linkList.insert('a','head')
-linkList.insert('b','a')
-linkList.insert('c','b')
+loopLinkList.insert('a','head')
+loopLinkList.insert('b','a')
+loopLinkList.insert('c','b')
+loopLinkList.display()
+console.log(loopLinkList.findPrev('head'))
 
-linkList.display()
-linkList.remove('b')
-linkList.display()
 

@@ -31,8 +31,8 @@ class DoubleLinkList {
     //展示
     display() {
         let currentNode = this.head
-        while(currentNode){
-            console.log(currentNode.element)
+        while(currentNode.next){
+            console.log(currentNode.next.element)
             currentNode = currentNode.next
         }
     }
@@ -60,14 +60,13 @@ class DoubleLinkList {
         while (currentNode.next){
             currentNode = currentNode.next
         }
-        return currentNode.element
+        return currentNode
     }
 
     //反向显示链表元素
     dispReverse() {
         let currentNode = this.findLast()
-        console.log(currentNode)
-        while (currentNode){
+        while (currentNode.previous){
             console.log(currentNode.element)
             currentNode = currentNode.previous
         }
@@ -81,8 +80,10 @@ doubleLinkList.insert('b','a')
 doubleLinkList.insert('c','b')
 
 doubleLinkList.display()
-// doubleLinkList.remove('b')
-// doubleLinkList.display()
-
-// console.log(doubleLinkList.findLast())
-// doubleLinkList.dispReverse()
+console.log('------------')
+doubleLinkList.remove('b')
+doubleLinkList.display()
+console.log('------------')
+console.log(doubleLinkList.findLast())
+console.log('------------')
+doubleLinkList.dispReverse()
