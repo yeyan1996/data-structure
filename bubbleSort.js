@@ -1,17 +1,16 @@
 const MyArray = require('./MyArray.js')
 let arr = new MyArray()
-arr.setData(10)
-console.log(arr)
 
 function bubbleSort() {
-    for (let i = 0; i < arr.length- 1; i++) {
-        for (let j = 0; j < arr.length; j++) {
-            if(arr[i] > arr[j]){
-                arr.swap(arr,i,j)
+    for (let i = arr.length - 1; i >= 0; i--) {
+        //里层每次循环次数-1，第一次为数组长度-1
+        for (let j = 0; j < i; j++) {
+            if (arr[j] > arr[j + 1]) {
+                arr.swap(arr, j, j + 1)
             }
+            console.log(arr)
         }
     }
 }
 
 bubbleSort()
-console.log(arr)

@@ -1,12 +1,15 @@
 module.exports = class MyArray extends Array{
     constructor() {
         super()
+        this.setData(10)
     }
 
     setData(size) {
         for (let i = 0; i < size; i++) {
             this[i] = Math.floor(Math.random() * (size + 1))
         }
+        console.log(this)
+        console.log('-----------------')
     }
 
     swap(arr, index1, index2) {
