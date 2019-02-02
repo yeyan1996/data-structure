@@ -4,6 +4,7 @@ class HashTable {
         this.table = new Array(length)
         this.buildChains()
     }
+
     //散列函数
     betterHash(string) {
         const H = 37
@@ -13,6 +14,7 @@ class HashTable {
         }
         return total % this.table.length
     }
+
     put(key, data) {
         let index = 0
         let pos = this.betterHash(String(key))
@@ -20,17 +22,28 @@ class HashTable {
         while (this.table[pos][index]) {
             index++
         }
-        this.table[pos][index] = data
+        //双数存键名
+        this.table[pos][index] = key
+        //单数存数据
+        this.table[pos][index + 1] = data
     }
 
-    get(key){
+    get(key) {
+        let index = 0
         let pos = this.betterHash(String(key))
-        return this.table[pos]
+        while (!this.table[pos][index] === key) {
+            index++
+        }
+        return this.table[pos][index + 1]
     }
+
     showDistro() {
         for (let i = 0; i < this.table.length; i++) {
             if (this.table[i][0]) {
-                console.log(i + ":" + this.table[i])
+                for (let j = 0; j < this.table[i].length;) {
+                    console.log(i + ":" + this.table[i][j+1])
+                    j = j + 2
+                }
             }
         }
     }
@@ -50,5 +63,5 @@ hashTable.put(2, "b")
 hashTable.put("qwe", "c")
 
 hashTable.showDistro()
-console.log(hashTable.get("2333"))
+
 

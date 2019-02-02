@@ -2,7 +2,7 @@
 class HashTable {
     constructor(length) {
         this.table = new Array(length)
-        this.buildChains()
+        this.values = new Array(length)
     }
     //散列函数
     betterHash(string) {
@@ -14,32 +14,30 @@ class HashTable {
         return total % this.table.length
     }
     put(key, data) {
-        let index = 0
         let pos = this.betterHash(String(key))
-        //开链法:如果二维数组(也叫做链)第一个元素有值了就往后推直到找到一个空单元再存储
-        while (this.table[pos][index]) {
-            index++
+        //线性探测法:
+        while (this.table[pos]) {
+            pos++
         }
-        this.table[pos][index] = data
+        this.table[pos] = key
+        this.values[pos] = data
     }
 
     get(key){
         let pos = this.betterHash(String(key))
-        return this.table[pos]
+        while (this.table[pos] === key){
+            pos++
+        }
+        return this.values[pos]
     }
     showDistro() {
         for (let i = 0; i < this.table.length; i++) {
-            if (this.table[i][0]) {
-                console.log(i + ":" + this.table[i])
+            if (this.table[i]) {
+                console.log(i + ":" + this.table[i] + "," + this.values[i])
             }
         }
     }
 
-    buildChains() {
-        for (let i = 0; i < this.table.length; i++) {
-            this.table[i] = []
-        }
-    }
 }
 
 let hashTable = new HashTable(137)
