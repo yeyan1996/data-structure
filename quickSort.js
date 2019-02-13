@@ -24,7 +24,7 @@ console.log(quickSort1(arr))
 
 
 //原地算法的快速排序
-function quickSort2(arr, left, right) {
+ function quickSort2(arr, left, right) {
     if (arr.length <= 1) return arr
     //返回一个新的选择点
     let flagIndex = partition(arr, left, right)
