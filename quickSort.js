@@ -1,7 +1,7 @@
 // const MyArray = require('./MyArray.js')
 // let arr = new MyArray()
 // arr = [...arr] //hack
-arr = [59, 25, 71, 16, 62, 84, 34, 45]
+arr = [25, 18, 20, 16, 75, 64, 88, 51]
 
 //创建新数组的快速排序(会占用额外控件)
 function quickSort1(arr) {
@@ -38,28 +38,29 @@ function quickSort2(arr, left, right) {
 
 function partition(arr, left, right) {
 
-    //先指定一个选择点保存它的元素值,不能使用动态的flagIndex,否则每次判断都会改变
-
-    //根据left/right参数设置一个随机下标点
-    let randomIndex = parseInt(Math.random() * (right - left + 1)) + left
+    //指定当前排序的标志点,不能使用动态的flagIndex,否则每次判断都会改变
+    //根据left/right参数设置一个随机标志点
+    let randomIndex = Math.floor((left + right) / 2)
+    // let randomIndex = Math.floor(Math.random() * (right - left + 1)) + left
     const pivot = arr[randomIndex];
 
     while (left <= right) {
-        //左哨兵和选择点进行对比,直到找到一个比选择点大的元素为止(找到选择点还没找到会停在选择点)
+        //左哨兵和标志点进行对比,直到找到一个大于等于选择点的元素(直到遇到标志点)
         while (arr[left] < pivot) {
             left++
         }
-        //右哨兵和选择点进行对比,直到找到一个比选择点小的元素为止(找到选择点还没找到会停在选择点)
+        //右哨兵和标志点进行对比,直到找到一个小于等于选择点的元素(直到遇到标志点)
         while (arr[right] > pivot) {
             right--
         }
-        //防止目标元素是整个元素最小的导致right的位置变成-1(这种情况则不会交换元素)
+        //确保右哨兵大于左哨兵的时候才交换元素,保证右边的值比左边的大
         if (left <= right) {
             [arr[left], arr[right]] = [arr[right], arr[left]]
             left++
             right--
         }
     }
+    //返回下一次排序的分组标志点(left左边数组比left对应元素都小,右边的数组比left对应的元素都大)
     return left
 }
 
