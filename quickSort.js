@@ -1,7 +1,6 @@
-// const MyArray = require('./MyArray.js')
-// let arr = new MyArray()
-// arr = [...arr] //hack
-arr = [25, 18, 20, 16, 75, 64, 88, 51]
+const MyArray = require('./MyArray.js')
+let arr = new MyArray()
+arr = [...arr] //hack
 
 //创建新数组的快速排序(会占用额外控件)
 function quickSort1(arr) {
@@ -24,14 +23,14 @@ function quickSort1(arr) {
 console.log(quickSort1(arr))
 
 
-//原地算法的快速排序
+//原地算法的快速排序(https://humanwhocodes.com/blog/2012/11/27/computer-science-in-javascript-quicksort/)
 function quickSort2(arr, left, right) {
     if (arr.length <= 1) return arr
-    //返回一个新的选择点
+    //返回一个新的标志点
     let flagIndex = partition(arr, left, right)
     //如果左边的元素超过1个则排序左半边数组
     if (left < flagIndex - 1) quickSort2(arr, left, flagIndex - 1)
-    //如果右边的元素超过1个则排序右半边数组(包括选择点元素)
+    //如果右边的元素超过1个则排序右半边数组(包括标志点元素)
     if (right > flagIndex) quickSort2(arr, flagIndex, right)
     return arr
 }
@@ -39,17 +38,18 @@ function quickSort2(arr, left, right) {
 function partition(arr, left, right) {
 
     //指定当前排序的标志点,不能使用动态的flagIndex,否则每次判断都会改变
-    //根据left/right参数设置一个随机标志点
-    let randomIndex = Math.floor((left + right) / 2)
-    // let randomIndex = Math.floor(Math.random() * (right - left + 1)) + left
+    //根据当前left/right参数设置一个随机标志点
+    let randomIndex = Math.floor(Math.random() * (right - left + 1)) + left
     const pivot = arr[randomIndex];
 
     while (left <= right) {
-        //左哨兵和标志点进行对比,直到找到一个大于等于选择点的元素(直到遇到标志点)
+        //左哨兵和标志点进行对比,直到找到一个大于等于标志点的元素
+        //和标志点相等的元素也要停下
         while (arr[left] < pivot) {
             left++
         }
-        //右哨兵和标志点进行对比,直到找到一个小于等于选择点的元素(直到遇到标志点)
+        //右哨兵和标志点进行对比,直到找到一个小于等于标志点的元素
+        //和标志点相等的元素也要停下
         while (arr[right] > pivot) {
             right--
         }
