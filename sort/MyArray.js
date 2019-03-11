@@ -2,7 +2,7 @@ module.exports = class MyArray extends Array{
     constructor() {
         super()
         this.setData(10)
-        console.log(this)
+        console.log('init Array',this)
     }
 
     setData(size) {
