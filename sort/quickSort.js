@@ -2,7 +2,7 @@ const MyArray = require('./MyArray.js')
 let arr = new MyArray()
 arr = [...arr] //hack
 
-//创建新数组的快速排序(会占用额外控件)
+//创建新数组的快速排序(会占用额外空间)
 function quickSort1(arr) {
     arr = [...arr]
     if (arr.length < 1) return arr
@@ -20,7 +20,7 @@ function quickSort1(arr) {
     return [...quickSort1(left), flag, ...quickSort1(right)]
 }
 
-console.log(quickSort1(arr))
+console.log('非原地算法',quickSort1(arr))
 
 
 //原地算法的快速排序(https://humanwhocodes.com/blog/2012/11/27/computer-science-in-javascript-quicksort/)
@@ -62,9 +62,9 @@ function partition(arr, left, right) {
             right--
         }
     }
-    //返回下一次排序的分组标志点(left左边数组比left对应元素都小,右边的数组比left对应的元素都大)
+    //返回当前轮排序结束的标志点(left左边数组比left对应元素都小,右边的数组比left对应的元素都大)
     return left
 }
 
-console.log(quickSort2(arr, 0, arr.length - 1))
+console.log('  原地算法',quickSort2(arr, 0, arr.length - 1))
 
