@@ -36,26 +36,28 @@ function quickSort2(arr, left, right) {
 }
 
 function partition(arr, left, right) {
-
+    //left/right为左右指针
     //指定当前排序的标志点,不能使用动态的flagIndex,否则每次判断都会改变
     //根据当前left/right参数设置一个随机标志点
     let randomIndex = Math.floor(Math.random() * (right - left + 1)) + left
     const pivot = arr[randomIndex];
 
+    //当左右指针重合退出while循环
     while (left <= right) {
-        //左哨兵和标志点进行对比,直到找到一个大于等于标志点的元素
+        //左指针和标志点进行对比,直到找到一个大于等于标志点的元素
         //和标志点相等的元素也要停下
         while (arr[left] < pivot) {
             left++
         }
-        //右哨兵和标志点进行对比,直到找到一个小于等于标志点的元素
+        //右指针和标志点进行对比,直到找到一个小于等于标志点的元素
         //和标志点相等的元素也要停下
         while (arr[right] > pivot) {
             right--
         }
-        //确保右哨兵大于左哨兵的时候才交换元素,保证右边的值比左边的大
+        //确保右指针大于左指针的时候才交换元素,保证右边的值比左边的大
         if (left <= right) {
             [arr[left], arr[right]] = [arr[right], arr[left]]
+            //交换后左右指针继续前进/后退一格
             left++
             right--
         }
