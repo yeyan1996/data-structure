@@ -42,7 +42,7 @@ class BST {
     }
 
     //深度遍历
-    //中序遍历
+    //中序遍历(二叉查找树的中序遍历返回的是一个顺序数组)
     inOrder(node) {
         if (node) {
             this.inOrder(node.left)
@@ -153,14 +153,19 @@ class BST {
 
 
 let bst = new BST()
+let nums = [123,75,26,9,4,15,788,35,364,845,141,6,8];
+for(let i = 0; i < nums.length; i++) {
+    bst.insert(nums[i]);
+}
 
-bst.insert(23)
-bst.insert(45)
-bst.insert(16)
-bst.insert(37)
-bst.insert(3)
-bst.insert(99)
-bst.insert(55)
+//         23
+//        /  \
+//      16    45
+//      /     / \
+//     3     37  99
+//              /
+//             55
+
 
 console.log('中序遍历-------------')
 bst.inOrder(bst.root)
