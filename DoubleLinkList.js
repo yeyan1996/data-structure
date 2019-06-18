@@ -1,89 +1,112 @@
 //双向链表
+// 链表的 node 类
 class Node {
-    constructor(element) {
-        this.element = element
+    constructor(data) {
+        this.data = data
         this.next = null
-        this.previous = null
+        this.prev = null
     }
 }
 
 class DoubleLinkList {
     constructor() {
         //链表头元素
-        this.head = new Node('head')
+        this.head = null
+        this.tail = null
     }
 
-    find(item) {
+    add(data) {
+        let node = new Node(data)
+        if (!this.head) {
+            this.head = node
+            this.tail = node
+        }else{
+            node.prev = this.tail
+            this.tail.next = node
+            this.tail = node
+        }
+        return this
+    }
+
+    find(data) {
         let currentNode = this.head
-        while (currentNode.element !== item) {
+        while (currentNode.data !== data) {
             currentNode = currentNode.next
         }
         return currentNode
     }
+
     //在某个元素后插入一个元素
-    insert(element, item) {
-        let newNode = new Node(element)
-        let currentNode = this.find(item)
+    findAndInsert(data, targetData) {
+        let newNode = new Node(data)
+        let currentNode = this.find(targetData)
+        // 将新元素的下个元素指向被插入的元素的下个元素
+        // 将上个元素指向被插入元素的上个元素
+        // currentNode <-> newNode <-> currentNodeNextNode
         newNode.next = currentNode.next
-        newNode.previous = currentNode
+        newNode.prev = currentNode
+        currentNode.next.prev = newNode
         currentNode.next = newNode
+        return this
     }
+
     //展示
     display() {
+        let res = []
         let currentNode = this.head
-        while(currentNode.next){
-            console.log(currentNode.next.element)
+        while (currentNode) {
+            res.push(currentNode.data)
             currentNode = currentNode.next
         }
-    }
-    //双向链表不需要寻找前一个元素的方法
-    // findPrev(item){
-    //     let currentNode = this.head
-    //     while (currentNode.next && currentNode.next.element !== item){
-    //         currentNode = currentNode.next
-    //     }
-    //     return currentNode
-    // }
-
-    //删除一个元素
-    remove(item) {
-        let currNode = this.find(item)
-        currNode.previous.next = currNode.next
-        currNode.next.previous = currNode.previous
-        currNode.next = null
-        currNode.previous = null
+        console.log(res.join(' -> '))
     }
 
-    //从前向后寻找最后一个元素
-    findLast() {
+    //寻找元素的前一个元素
+    findPrev(data) {
         let currentNode = this.head
-        while (currentNode.next){
+        while (currentNode.next && currentNode.next.data !== data) {
             currentNode = currentNode.next
         }
         return currentNode
     }
 
-    //反向显示链表元素
-    dispReverse() {
-        let currentNode = this.findLast()
-        while (currentNode.previous){
-            console.log(currentNode.element)
-            currentNode = currentNode.previous
+    //删除指定元素
+    remove(data) {
+        let prevNode = this.findPrev(data)
+        // prevNode <-> currentNode <-> currentNodeNextNode
+        // 转为
+        // prevNode <->  currentNodeNextNode
+        prevNode.next = prevNode.next.next
+        prevNode.next.prev = prevNode
+    }
+    // 反转双向链表
+    reverse() {
+        let current = this.head
+        while (current) {
+            let nextNode = current.next;
+           [ current.prev ,current.next] = [ current.next,current.prev]
+            current = nextNode
         }
+        [this.head,this.tail] = [this.tail,this.head]
+
     }
 }
 
 let doubleLinkList = new DoubleLinkList()
 
-doubleLinkList.insert('a','head')
-doubleLinkList.insert('b','a')
-doubleLinkList.insert('c','b')
+doubleLinkList.add(1).add(2).add(3)
+
+doubleLinkList
+    .findAndInsert('a', 1)
+    .findAndInsert('b', 'a')
+    .findAndInsert('c', 'b')
 
 doubleLinkList.display()
-console.log('------------')
 doubleLinkList.remove('b')
+console.log('--------------------')
 doubleLinkList.display()
-console.log('------------')
-console.log(doubleLinkList.findLast())
-console.log('------------')
-doubleLinkList.dispReverse()
+console.log('--------------------')
+doubleLinkList.reverse()
+doubleLinkList.display()
+
+

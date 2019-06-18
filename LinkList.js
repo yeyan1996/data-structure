@@ -18,9 +18,10 @@ class LinkList {
         if (!this.head) {
             this.head = node
             this.tail = node
+        }else{
+            this.tail.next = node
+            this.tail = node
         }
-        this.tail.next = node
-        this.tail = node
         return this
     }
 
@@ -71,6 +72,21 @@ class LinkList {
         // prevNode ->  currentNodeNextNode
         prevNode.next = prevNode.next.next
     }
+    // 反转单向链表
+    reverse() {
+        let prevNode = this.head
+        let current = prevNode.next
+        let nextNode
+        while (current) {
+            nextNode = current.next
+            current.next = prevNode
+
+            prevNode = current
+            current = nextNode
+        }
+        [this.head,this.tail] = [this.tail,this.head]
+        this.tail.next = null
+    }
 }
 
 let linkList = new LinkList()
@@ -87,4 +103,6 @@ linkList.display()
 linkList.remove('b')
 console.log('--------------------')
 linkList.display()
-
+console.log('--------------------')
+linkList.reverse()
+linkList.display()
