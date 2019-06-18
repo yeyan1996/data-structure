@@ -1,3 +1,14 @@
+/**
+ * @description 快速排序
+ * 时间复杂度:
+ * 最好 O(n log n) (顺序数组，每次基数的左边都小于右边，此时就是不断二分)
+ * 最坏 O(n^2)
+ * 平均 O(n log n)
+ * 空间复杂度: O(n log n)
+ * 稳定性:不稳定
+ **/
+
+
 const MyArray = require('./MyArray.js')
 let arr = new MyArray()
 arr = [...arr] //hack

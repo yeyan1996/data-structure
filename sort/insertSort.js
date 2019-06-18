@@ -1,3 +1,14 @@
+/**
+ * @description 插入排序
+ * 时间复杂度:
+ * 最好 O(n)
+ * 最坏 O(n^2)
+ * 平均 O(n^2)
+ * 稳定性:稳定
+ **/
+
+
+
 const MyArray = require('./MyArray.js')
 let arr = new MyArray()
 arr = [...arr]
