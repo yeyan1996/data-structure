@@ -1,7 +1,7 @@
 //链表的node类
 class Node {
-    constructor(element) {
-        this.element = element
+    constructor(data) {
+        this.data = data
         this.next = null
     }
 }
@@ -9,53 +9,114 @@ class Node {
 class LoopLinkList {
     constructor() {
         //链表头元素
-        this.head = new Node('head')
-        this.head.next = this.head
+        this.head = null
+        this.tail = null
     }
 
-    find(item) {
+    add(data) {
+        let node = new Node(data)
+        if (!this.head) {
+            this.head = node
+            this.tail = node
+            this.tail.next = this.head
+        }else{
+            this.tail.next = node
+            this.tail = node
+            node.next = this.head
+        }
+        return this
+    }
+
+    find(data) {
         let currentNode = this.head
-        while (currentNode.element !== item) {
+        while (currentNode.data !== data) {
             currentNode = currentNode.next
+            if(currentNode === this.head) break
         }
         return currentNode
     }
+
     //在某个元素后插入一个元素
-    insert(element, item) {
-        let newNode = new Node(element)
+    findAndInsert(data, item) {
+        let newNode = new Node(data)
         let currentNode = this.find(item)
+        // 将新元素的下个元素指向被插入的元素的下个元素
+        // currentNode -> newNode -> currentNodeNextNode
         newNode.next = currentNode.next
         currentNode.next = newNode
+        return this
     }
-    //展示
-    display() {
-        let currentNode = this.head
-        while(currentNode.next && currentNode.next.element !== 'head'){
-            console.log(currentNode.next.element)
-            currentNode = currentNode.next
-        }
-    }
+
     //寻找元素的前一个元素
-    findPrev(item){
+    findPrev(data) {
         let currentNode = this.head
-        while (currentNode.next && currentNode.next.element !== item){
+        while (currentNode.next && currentNode.next.data !== data) {
             currentNode = currentNode.next
+            if(currentNode === this.head) break
         }
         return currentNode
     }
-    //删除一个元素
-    remove(item) {
-        let prevNode = this.findPrev(item)
+
+    //删除指定元素
+    remove(data) {
+        let prevNode = this.findPrev(data)
+        // prevNode -> currentNode -> currentNodeNextNode
+        // 转为
+        // prevNode ->  currentNodeNextNode
         prevNode.next = prevNode.next.next
+    }
+    // 反转循环链表
+    reverse() {
+        let prevNode = this.head
+        let current = prevNode.next
+        let nextNode
+        while (current) {
+            nextNode = current.next
+            current.next = prevNode
+            if(current === this.head) break
+            prevNode = current
+            current = nextNode
+        }
+        [this.head,this.tail] = [this.tail,this.head]
+        this.tail.next = this.head
+    }
+
+    //展示
+    display() {
+        let res = []
+        let currentNode = this.head
+        while (currentNode) {
+            res.push(currentNode.data)
+            currentNode = currentNode.next
+            if(currentNode === this.head) {
+                res.push('loop.......')
+                break
+            }
+        }
+        console.log(res.join(' -> '))
     }
 }
 
 let loopLinkList = new LoopLinkList()
 
-loopLinkList.insert('a','head')
-loopLinkList.insert('b','a')
-loopLinkList.insert('c','b')
+loopLinkList.add(1).add(2).add(3)
+
+
+loopLinkList
+    .findAndInsert('a', 1)
+    .findAndInsert('b', 'a')
+    .findAndInsert('c', 'b')
+
 loopLinkList.display()
-console.log(loopLinkList.findPrev('head'))
+loopLinkList.remove('b')
+console.log('--------------------')
+loopLinkList.display()
+console.log('--------------------')
+loopLinkList.reverse()
+console.log(loopLinkList)
+loopLinkList.display()
+
+
+
 
 

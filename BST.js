@@ -41,43 +41,60 @@ class BST {
         }
     }
 
-    //深度遍历
-    //中序遍历(二叉查找树的中序遍历返回的是一个顺序数组)
+    // 深度遍历
+    // 中序遍历(二叉查找树的中序遍历返回的是一个顺序数组)
     inOrder(node) {
-        if (node) {
-            this.inOrder(node.left)
-            console.log(node.data)
-            this.inOrder(node.right)
+        let res = []
+        const _inOrder = function _inOrder(node,res) {
+            if (node) {
+                _inOrder(node.left,res)
+                res.push(node.data)
+                _inOrder(node.right,res)
+            }
         }
+        _inOrder(node,res)
+        return res
     }
 
-    //先序遍历
+    // 先序遍历
     preOrder(node) {
-        if (node) {
-            console.log(node.data)
-            this.preOrder(node.left)
-            this.preOrder(node.right)
+        let res = []
+        const _preOrder = function _preOrder(node,res) {
+            if (node) {
+                res.push(node.data)
+                _preOrder(node.left,res)
+                _preOrder(node.right,res)
+            }
         }
+        _preOrder(node,res)
+        return res
     }
 
-    //后序遍历
+    // 后序遍历
     postOrder(node) {
-        if (node) {
-            this.postOrder(node.left)
-            this.postOrder(node.right)
-            console.log(node.data)
+        let res = []
+        const _postOrder = function _postOrder(node,res) {
+            if (node) {
+                _postOrder(node.left,res)
+                _postOrder(node.right,res)
+                res.push(node.data)
+            }
         }
+        _postOrder(node,res)
+        return res
     }
 
     //广度遍历(按树的层数,借助队列数据结构)
     breadthTraversal() {
+        let res = []
         queue.enqueue(this.root)
         while (!queue.empty()) {
             let item = queue.dequeue()
-            console.log(item.data)
+            res.push(item.data)
             if (item.left) queue.enqueue(item.left)
             if (item.right) queue.enqueue(item.right)
         }
+        return res
     }
 
     //最小/大值(永远在最左/右的叶子节点上)
@@ -119,6 +136,7 @@ class BST {
     removeNode(node, data) {
         if (!node) return null
         if (data > node.data ) {
+            /**通过递归调用，重新构建二叉查找树，建立父子关系**/
             node.right = this.removeNode(node.right, data)
             return node
         } else if (data < node.data ) {
@@ -139,7 +157,7 @@ class BST {
             }
             //如果有左右子节点,则找到左子树最小值/右子树最大值(中序遍历中目标节点的前驱/后继),将目标节点替换为前驱/后继节点,并且删除前驱/后继节点
             if (node.left && node.right) {
-                //这里使用后继节点,求右子树的最大值
+                //这里使用后继节点,求右子树的最小值
                 let min = this.getMin(node.right)
                 let rightNodeTree = this.removeNode(node.right,min)
                 node.data = min
@@ -151,33 +169,32 @@ class BST {
     }
 }
 
-
 let bst = new BST()
 let nums = [123,75,26,9,4,15,788,35,364,845,141,6,8];
 for(let i = 0; i < nums.length; i++) {
     bst.insert(nums[i]);
 }
 
-//         23
-//        /  \
-//      16    45
-//      /     / \
-//     3     37  99
-//              /
-//             55
+//             123
+//            /   \
+//          75    788
+//         /      /  \
+//        26     364  845
+//       /  \   /
+//      9   35 141
+//     /
+//    4
+//      \
+//       6
+//      /
+//     8
 
+console.log('中序遍历:',bst.inOrder(bst.root))
+console.log('先序遍历:',bst.preOrder(bst.root))
+console.log('后序遍历:',bst.postOrder(bst.root))
+console.log('广度优先:',bst.breadthTraversal())
+console.log('find 33:',bst.find(35))
+bst.remove(141)
+console.log('remove 141:',bst.inOrder(bst.root))
 
-console.log('中序遍历-------------')
-bst.inOrder(bst.root)
-console.log('先序遍历-------------')
-bst.preOrder(bst.root)
-console.log('后序遍历-------------')
-bst.postOrder(bst.root)
-console.log('广度优先-------------')
-bst.breadthTraversal()
-console.log('find----------')
-console.log(bst.find(99))
-console.log('remove---------')
-bst.remove(45)
-bst.inOrder(bst.root)
 
