@@ -77,5 +77,5 @@ function partition(arr, left, right) {
     return left
 }
 
-console.log('  原地算法',quickSort2(arr, 0, arr.length - 1))
+console.log('原地算法',quickSort2(arr, 0, arr.length - 1))
 

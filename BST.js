@@ -165,7 +165,18 @@ class BST {
                 return node
             }
         }
+    }
 
+    // 翻转二叉树
+    reverseTree(current = this.root) {
+            if(!current) return
+            this.reverseTree(current.left)
+            this.reverseTree(current.right)
+            this.reverseNode(current)
+    }
+
+    reverseNode(node) {
+        [node.left,node.right] = [node.right,node.left]
     }
 }
 
@@ -196,5 +207,5 @@ console.log('广度优先:',bst.breadthTraversal())
 console.log('find 33:',bst.find(35))
 bst.remove(141)
 console.log('remove 141:',bst.inOrder(bst.root))
-
-
+bst.reverseTree()
+console.log('中序遍历:',bst.inOrder(bst.root))

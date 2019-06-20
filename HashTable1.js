@@ -1,67 +1,81 @@
-//散列表(开链法)
+// 哈希表(开链法)
 class HashTable {
-    constructor(length) {
-        this.table = new Array(length)
-        this.buildChains()
+    constructor() {
+        // 为了让哈希算法减少冲突，没有指定 table 长度
+        this.table = []
     }
 
-    //散列函数
-    betterHash(string) {
-        const H = 37
-        let total = 0
-        for (let i = 0; i < string.length; i++) {
-            total += total * H + string.charCodeAt(i)
+    //哈希函数
+    computeHash(value) {
+        value = String(value)
+        const SEED = 37
+        let hash = 0
+        for (let i = 0; i < value.length; i++) {
+            hash += hash * SEED + value.charCodeAt(i)
         }
-        return total % this.table.length
+        return hash
     }
 
-    put(key, data) {
-        let index = 0
-        let pos = this.betterHash(String(key))
-        //开链法:如果二维数组(也叫做链)第一个元素有值了就往后推直到找到一个空单元再存储
-        while (this.table[pos][index]) {
-            index++
+    add(value) {
+        let index = this.computeHash(value)
+        // 开链法:如果二维数组第一个元素有值了就存储到下个元素
+        if (Array.isArray(this.table[index])) {
+            this.table[index].push(value)
+        } else if (this.table[index]) {
+            this.table[index] = [this.table[index], value]
+        } else {
+            this.table[index] = value
         }
-        //双数存键名
-        this.table[pos][index] = key
-        //单数存数据
-        this.table[pos][index + 1] = data
+        return this
     }
 
-    get(key) {
-        let index = 0
-        let pos = this.betterHash(String(key))
-        while (!this.table[pos][index] === key) {
-            index++
+    remove(value) {
+        let index = this.computeHash(value)
+        if (Array.isArray(this.table[index])) {
+            let innerIndex = this.table[index].findIndex(item => item === value)
+            innerIndex > -1 && this.table[index].splice(innerIndex, 1)
+        } else if (this.table[index]) {
+            this.table[index] = undefined
         }
-        return this.table[pos][index + 1]
     }
 
-    showDistro() {
-        for (let i = 0; i < this.table.length; i++) {
-            if (this.table[i][0]) {
-                for (let j = 0; j < this.table[i].length;) {
-                    console.log(i + ":" + this.table[i][j+1])
-                    j = j + 2
-                }
+    // 哈希表不需要获取某个元素，只需要知道元素是否存在于哈希表中
+    contains(value) {
+        let index = this.computeHash(value)
+        if (this.table[index] === value) {
+            return true
+        } else if (Array.isArray(this.table[index])) {
+            for (let i = 0; i < this.table[index].length; i++) {
+                if (this.table[index][i] === value) return true
             }
         }
+        return false
     }
 
-    buildChains() {
-        for (let i = 0; i < this.table.length; i++) {
-            this.table[i] = []
-        }
+    display() {
+        let flag = false
+        this.table.forEach((item, index) => {
+            if(item) {
+                console.log(`${index}: ${item}`)
+                flag = true
+            }
+        })
+        !flag && console.log('hashTable 为空')
     }
+
 }
 
-let hashTable = new HashTable(137)
+let hashTable = new HashTable()
 
-hashTable.put(1, "a")
-hashTable.put(2, "b")
-hashTable.put(2, "b")
-hashTable.put("qwe", "c")
+hashTable.add("a")
+    .add("a")
+    .add("b")
+    .add("d")
+    .add(123)
 
-hashTable.showDistro()
-
-
+console.log(hashTable.contains("a"))
+console.log('--------------')
+hashTable.display()
+hashTable.remove(123)
+console.log('--------------')
+hashTable.display()
