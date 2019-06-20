@@ -88,48 +88,68 @@
 
 
 class Node {
-    constructor(word) {
-        this.word = word
+    constructor(alphabet) {
+        this.alphabet = alphabet
         this.end = false
-        this.prevStr = ""
+        this.prevWord = ""
         this.children = {}
+        this.numPass = 0
     }
 }
 
 class Trie {
     constructor() {
-        this.root = new Node(null)
+        this.root = new Node()
     }
 
-    addStr(str) {
+    addWord(word) {
         let currentNode = this.root
-        for (let i = 0; i < str.length; i++) {
-            let word = str[i]
-            this.addWord(word, currentNode, i === str.length - 1)
-            currentNode = currentNode.children[word]
+        for (let i = 0; i < word.length; i++) {
+            let alphabet = word[i]
+            this.addAlphabet(alphabet, currentNode, i === word.length - 1)
+            currentNode = currentNode.children[alphabet]
         }
         return this
     }
 
-    addWord(word, node, end) {
-        let childNode = new Node(word)
-        node.children[word] || (node.children[word] = childNode)
-        childNode.prevStr = node.prevStr + word
+    addAlphabet(alphabet, node, end) {
+        let childNode = new Node(alphabet)
+        node.children[alphabet] || (node.children[alphabet] = childNode)
+        childNode.prevWord = node.prevWord + alphabet
         if (end) childNode.end = true
     }
 
-    findStr(str) {
+    findWord(word) {
         let currentNode = this.root
-        for (let i = 0; i < str.length; i++) {
-            let word = str[i]
-            currentNode = currentNode.children[word]
+        for (let i = 0; i < word.length; i++) {
+            let alphabet = word[i]
+            currentNode = currentNode.children[alphabet]
             if (!currentNode) return
         }
         return currentNode
     }
 
-    predictWord(str) {
+    predictWord(word) {
+        let res = []
+        let node = this.findWord(word)
+        const _predictWord = function _predictWord(node,res) {
+            res.push(node.prevWord)
+            if(node.children){
+                Object.keys(node.children).forEach(key =>_predictWord(node.children[key],res))
+            }
+        }
+        _predictWord(node,res)
+        return res
+    }
 
+    removeWord(word) {
+        let current = this.root
+        for (let i=0;i<word.length;i++){
+            let alphabet = word[i]
+            while (current){
+                if(current.children[alphabet]){}
+            }
+        }
     }
 }
 
@@ -141,4 +161,5 @@ trie.addWord('abc')
     .addWord('abcdef')
     .addWord('abcdefg')
     .addWord('abcdefgh')
-console.log(trie.findStr('abcde'))
+console.log(trie.findWord('abcde'))
+console.log(trie.predictWord('abc'))
