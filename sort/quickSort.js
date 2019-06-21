@@ -11,7 +11,7 @@
 
 const MyArray = require('./MyArray.js')
 let arr = new MyArray()
-arr = [...arr] //hack
+
 
 //创建新数组的快速排序(会占用额外空间)
 function quickSort1(arr) {
@@ -36,24 +36,25 @@ console.log('非原地算法',quickSort1(arr))
 
 //原地算法的快速排序(https://humanwhocodes.com/blog/2012/11/27/computer-science-in-javascript-quicksort/)
 function quickSort2(arr, left, right) {
-    if (arr.length <= 1) return arr
+    // 当左右都是同一个元素时直接返回，防止爆栈
+    if(right-left === 0) return
     //返回一个新的标志点
     let flagIndex = partition(arr, left, right)
-    //如果左边的元素超过1个则排序左半边数组
-    if (left < flagIndex - 1) quickSort2(arr, left, flagIndex - 1)
-    //如果右边的元素超过1个则排序右半边数组(包括标志点元素)
-    if (right > flagIndex) quickSort2(arr, flagIndex, right)
+    //排序左半边数组
+    quickSort2(arr,left,flagIndex-1)
+    //排序右半边数组(包括标志点元素)
+    quickSort2(arr, flagIndex, right)
     return arr
 }
 
 function partition(arr, left, right) {
-    //left/right为左右指针
-    //指定当前排序的标志点,不能使用动态的flagIndex,否则每次判断都会改变
-    //根据当前left/right参数设置一个随机标志点
-    let randomIndex = Math.floor(Math.random() * (right - left + 1)) + left
-    const pivot = arr[randomIndex];
+    // left/right为左右指针
+    // 指定当前排序的标志点,不能使用动态的flagIndex,否则每次判断都会改变
+    // 选择数组的中间值作为基准点，不推荐使用数组第一个值，详情见上面描述
+    let index = Math.floor((left + right) / 2)
+    const pivot = arr[index];
 
-    //当左右指针重合退出while循环
+    //当右指针小于左指针退出while循环
     while (left <= right) {
         //左指针和标志点进行对比,直到找到一个大于等于标志点的元素
         //和标志点相等的元素也要停下

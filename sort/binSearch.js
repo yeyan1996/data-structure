@@ -1,4 +1,10 @@
-//二分查找
+/**
+ * @description 二分查找
+ * 时间复杂度:
+ * 最好 O(1)
+ * 最坏 O(log n)
+ **/
+
 let arr = [1, 2, 3, 4, 4, 4, 4, 4, 4, 5, 6, 7, 8, 9]
 
 function binSearch(arr, data) {

@@ -1,3 +1,15 @@
+/**
+ * @description 堆排序
+ * 时间复杂度:
+ * 最好 O(n log n)
+ * 最坏 O(n log n)
+ * 平均 O(n log n)
+ * 稳定性:不稳定
+ * 堆的高度始终小于 log n (n 为元素个数)
+ * 堆是一个完全二叉树
+ **/
+
+
 const MyArray = require('./MyArray.js')
 let arr = new MyArray()
 
@@ -20,7 +32,6 @@ function maxHeapify(array, index, heapSize) {
         if (iRight < heapSize && array[iMax] < array[iRight]) {
             iMax = iRight;
         }
-
         if (iMax !== index) {
             //将指针指向较大的子节点,并且将当前节点和较大的子节点交换
             swap(array, iMax, index);
@@ -43,7 +54,7 @@ function buildMaxHeap(array) {
 function heapSort(array) {
     buildMaxHeap(array);
     console.log(`建堆：${array}`)
-    //堆排序(小根堆)
+    //堆排序(大根堆)
     for (let i = array.length - 1; i > 0; i--) {
         //每次排序先将顶部的元素(因为是大根堆所以顶部元素是数组最大的)和根堆尾部(数组尾部)交换
         swap(array, 0, i);
@@ -54,4 +65,4 @@ function heapSort(array) {
     return array;
 }
 
-console.log(`小根堆：${heapSort(arr)}`)
+console.log(`大根堆：${heapSort(arr)}`)
