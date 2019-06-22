@@ -17,6 +17,7 @@ arr = [...arr] //hack
 function arrSplit(arr) {
     if (arr.length === 1) return arr
     let midIndex = Math.floor(arr.length / 2)
+    /**因为被浅拷贝了不会影响到原数组，所以原数组不会被排序**/
     let leftArr = arr.slice(0, midIndex)
     let rightArr = arr.slice(midIndex, arr.length)
     return merge(arrSplit(leftArr), arrSplit(rightArr))

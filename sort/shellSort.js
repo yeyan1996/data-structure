@@ -1,8 +1,15 @@
+/**
+ * @description 希尔排序
+ * 时间复杂度:
+ * 最好 O(n log n)
+ * 最坏 O(n log n)
+ * 平均 O(n log n)
+ * 稳定性:不稳定
+ **/
 
 const MyArray = require('./MyArray.js')
 let arr = new MyArray()
 
-//希尔排序
 function shellSort() {
     //计算间隔的算法
     let h = 1
