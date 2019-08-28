@@ -197,8 +197,8 @@ for(let i = 0; i < nums.length; i++) {
 //    4
 //      \
 //       6
-//      /
-//     8
+//        \
+//         8
 
 console.log('中序遍历:',bst.inOrder(bst.root))
 console.log('先序遍历:',bst.preOrder(bst.root))
