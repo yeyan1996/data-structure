@@ -28,6 +28,7 @@ class Stack {
         return this.top
     }
 }
+module.exports = Stack
 
 let stack = new Stack()
 

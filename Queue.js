@@ -35,4 +35,4 @@ class Queue {
 }
 
 
-module.exports = new Queue()
+module.exports = Queue
