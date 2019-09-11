@@ -1,0 +1,30 @@
+{
+  "name": "data-structure",
+  "version": "1.0.0",
+  "description": "数据结构练习(数据结构与算法JavaScript描述)",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint --fix *.js sort/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yeyan1996/data-structure.git"
+  },
+  "keywords": [
+    "data-structure"
+  ],
+  "author": "yeyan1996",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/yeyan1996/data-structure/issues"
+  },
+  "homepage": "https://github.com/yeyan1996/data-structure#readme",
+  "devDependencies": {
+    "eslint": "^6.3.0",
+    "eslint-config-standard": "^14.1.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-node": "^10.0.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1"
+  }
+}
