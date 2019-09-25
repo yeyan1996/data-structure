@@ -1,72 +1,73 @@
 // 哈希表(线性探测法)
 // 需要保证数组长度足够大
 class HashTable {
-  constructor () {
-    this.table = []
+  constructor() {
+    this.table = [];
   }
 
   // 哈希函数
-  computeHash (value) {
-    value = String(value)
-    const SEED = 37
-    let hash = 0
+  computeHash(value) {
+    value = String(value);
+    const SEED = 37;
+    let hash = 0;
     for (let i = 0; i < value.length; i++) {
-      hash += hash * SEED + value.charCodeAt(i)
+      hash += hash * SEED + value.charCodeAt(i);
     }
-    return hash
+    return hash;
   }
 
-  add (value) {
-    let index = this.computeHash(value)
+  add(value) {
+    let index = this.computeHash(value);
     // 线性探测法:
     while (this.table[index]) {
-      index++
+      index++;
     }
-    this.table[index] = value
-    return this
+    this.table[index] = value;
+    return this;
   }
 
   // 哈希表不需要获取某个元素，只需要知道元素是否存在于哈希表中
-  contains (value) {
-    const index = this.computeHash(value)
+  contains(value) {
+    const index = this.computeHash(value);
     for (let i = index; i < this.table.length; i++) {
-      if (this.table[index] === value) return true
+      if (this.table[index] === value) return true;
     }
-    return false
+    return false;
   }
 
-  remove (value) {
-    const index = this.computeHash(value)
+  remove(value) {
+    const index = this.computeHash(value);
     for (let i = index; i < this.table.length; i++) {
       if (this.table[index] === value) {
-        delete this.table[index]
+        delete this.table[index];
       }
     }
   }
 
-  display () {
-    let flag = false
+  display() {
+    let flag = false;
     this.table.forEach((item, index) => {
       if (item) {
-        console.log(`${index}: ${item}`)
-        flag = true
+        console.log(`${index}: ${item}`);
+        flag = true;
       }
-    })
-    !flag && console.log('hashTable 为空')
+    });
+    !flag && console.log("hashTable 为空");
   }
 }
 
-const hashTable = new HashTable()
+const hashTable = new HashTable();
 
-hashTable.add('a')
-  .add('a')
-  .add('b')
-  .add('d')
-  .add(123)
+hashTable
+  .add("a")
+  .add("a")
+  .add("b")
+  .add("d")
+  .add(123);
 
-console.log(hashTable.contains('a'))
-console.log('--------------')
-hashTable.display()
-hashTable.remove(123)
-console.log('--------------')
-hashTable.display()
+console.log(hashTable.contains("a"));
+console.log("--------------");
+hashTable.display();
+hashTable.remove(123);
+console.log("--------------");
+hashTable.display();
