@@ -102,8 +102,7 @@ class TraverseBST extends BST {
       } else if (temp.right && temp.right !== node) {
         stack.push(temp.right);
       } else {
-        let x = stack.pop();
-        res.push(x.data);
+        res.push(stack.pop().data);
         node = temp;
       }
     }
