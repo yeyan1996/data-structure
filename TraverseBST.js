@@ -90,23 +90,19 @@ class TraverseBST extends BST {
 
   // 后序遍历
   postOrderLoop(node) {
-    const stack = [];
+    const stack = [node];
     const res = [];
-    const cur = node;
-    let temp;
-    stack.push(cur);
     while (stack.length) {
-      temp = stack[stack.length - 1];
-      if (temp.left && temp.left !== node && temp.right !== node) {
-        stack.push(temp.left);
-      } else if (temp.right && temp.right !== node) {
-        stack.push(temp.right);
-      } else {
-        res.push(stack.pop().data);
-        node = temp;
+      let node = stack.pop();
+      res.push(node.data);
+      if (node.left) {
+        stack.push(node.left);
+      }
+      if (node.right) {
+        stack.push(node.right);
       }
     }
-    return res;
+    return res.reverse();
   }
 
   // 广度遍历(横向遍历)
