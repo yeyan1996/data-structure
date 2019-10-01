@@ -4,7 +4,7 @@
   "description": "数据结构练习(数据结构与算法JavaScript描述)",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "format": "prettier --write *.js sort/*.js"
+    "format": "prettier --write *.js algorithm/*.js"
   },
   "repository": {
     "type": "git",
