@@ -39,7 +39,9 @@ function adjustHeap(array, index, heapSize) {
   }
 }
 
+// 建堆（最大堆）
 function buildMaxHeap(array) {
+  // 最后一个非叶子节点开始向前排序
   const iParent = Math.floor(array.length / 2) - 1;
 
   for (let i = iParent; i >= 0; i--) {
@@ -47,6 +49,7 @@ function buildMaxHeap(array) {
   }
 }
 
+// 堆排序
 function heapSort(array) {
   buildMaxHeap(array);
   console.log(`建堆：${array}`);
