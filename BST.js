@@ -6,7 +6,7 @@ class Node {
   }
 }
 
-// 二叉查找树
+// 二叉查找树 binary search tree
 class BST {
   constructor() {
     this.root = null;
